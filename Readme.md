@@ -1,81 +1,37 @@
 ## Login Testing automation using java and selenium
-### select branch fro another programming language
-### run locally
+### if you're using javascript use this code
 
-#### clone this repo
-
+### first check your node and npm
 ```bash
-git clone https://github.com/Garongan/login-test-automation.git
+node -v
+npm -v
 ```
 
-#### open the directory
-
-#### install dependency
-
+### install selenium
 ```bash
-mvn install
+npm install selenium-webdriver
 ```
 
-#### run the login test
-
-```bash
-mvn clean test
-```
-
-#### or
-
+### create login.js file and copy this code
 copy this code is for testing login using chrome browser
 
-```java
-package org.example;
+```javascript
+const { Builder, Browser, By, Key, until } = require('selenium-webdriver')
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-
-public class LoginTest {
-
-    WebDriver driver;
-
-    @BeforeEach
-    void setup() {
-        driver = WebDriverManager.chromedriver().create();
-    }
-
-    @AfterEach
-    void tearDown() {
-        driver.quit();
-    }
-
-    @Test
-    public void login() {
-        // set property from chrome driver
-        driver.manage().window().maximize();
-
+;(async function example() {
+    // set driver
+    let driver = await new Builder().forBrowser(Browser.CHROME).build()
+    try {
         // hit the login url
-        driver.get("https://example.domain.com/login");
-
-        // get html element
-        WebElement userEmailLogin = driver.findElement(By.id("user_email_Login"));
-        WebElement userPassword = driver.findElement(By.id("user_password"));
-        WebElement loginButton = driver.findElement(By.name("commit"));
-
-        // send the data to login form
-        userEmailLogin.sendKeys("example@gmail.com");
-        userPassword.sendKeys("password");
-
-        loginButton.click();
-
-        String actualUrl = "https://example.domain.com/home";
-
-        String expectedUrl = driver.getCurrentUrl();
-
-        Assertions.assertEquals(expectedUrl, actualUrl);
+        await driver.get('https://example.domain.com/login')
+        // send value to login form
+        await driver.findElement(By.id('user_email_Login')).sendKeys('example@gmail.com', Key.RETURN)
+        await driver.findElement(By.id('user_password')).sendKeys('password', Key.RETURN)
+        // trigger the login button
+        await driver.findElement(By.name("login")).click();
+        await driver.wait(until.titleIs('Example - Home'), 1000)
+    } finally {
+        await driver.quit()
     }
-}
+})()
 ```
