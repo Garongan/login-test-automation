@@ -63,7 +63,7 @@ public class LoginTest {
         // get html element
         WebElement userEmailLogin = driver.findElement(By.id("user_email_Login"));
         WebElement userPassword = driver.findElement(By.id("user_password"));
-        WebElement loginButton = driver.findElement(By.name("commit"));
+        WebElement loginButton = driver.findElement(By.name("login"));
 
         // send the data to login form
         userEmailLogin.sendKeys("example@gmail.com");
